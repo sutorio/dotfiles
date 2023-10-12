@@ -1,0 +1,12 @@
+
+# Same as "clear" except that it clears the scrollback
+# buffer. This *should* work on most terminals
+alias clearscreen="printf '\033[2J\033[3J\033[1;1H'"
+
+# Make sure I don't get Vi or Vim by accident, I've spent
+# enough time configuring NVim and I'd rather have
+# access to that thanks.
+alias vim="nvim"
+alias vi="nvim"
+alias oldvim="vim"
+alias oldvi="vi"
