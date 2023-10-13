@@ -462,12 +462,12 @@ end
 -- Which-key Highlight Groups {{{
 -- =============================================================================
 local which_key_groups = {
-  -- WhichKey = { fg = p.text },
-  -- WhichKeyGroup = { fg = p.text },
-  -- WhichKeySeparator = { fg = p.text },
-  -- WhichKeyDesc = { fg = p.text },
-  -- WhichKeyFloat = { bg = groups.panel },
-  -- WhichKeyValue = { fg = p.text },
+  WhichKey = { fg = p.text },
+  WhichKeyGroup = { fg = p.text },
+  WhichKeySeparator = { fg = p.text },
+  WhichKeyDesc = { fg = p.text },
+  WhichKeyFloat = { bg = groups.panel },
+  WhichKeyValue = { fg = p.text },
 }
 
 for group, styles in pairs(which_key_groups) do

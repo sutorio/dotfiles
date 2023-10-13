@@ -1,5 +1,8 @@
 local M = {}
 
+-- @class LeaderMappings
+--
+
 -- Leader mapping helper. The mappings are of the form
 --
 -- ["binding"] = { rhs = "mapping", desc = "some description", mode = "mode or modes", opts = "any additional options" }

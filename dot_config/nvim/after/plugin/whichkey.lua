@@ -4,9 +4,10 @@
     -- keymap groups: which-key just prints `+prefix`.
     -- Therefore, names *only* are specified in the register.
     require("which-key").register({
-        f = { name = "Find stuff" },
+        e = { name = "Editing commands" },
+        f = { name = "Find copmmands" },
         l = {
-            name = "LSP-related",
+            name = "LSP commands",
             c = { name = "LSP code actions" },
             g = { name = "LSP goto" },
             w = { name = "LSP workspace" },

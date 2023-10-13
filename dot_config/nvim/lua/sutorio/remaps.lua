@@ -25,38 +25,32 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- =============================================================================
 -- {{{ Leader mappings
 -- =============================================================================
--- Open NetRW file manager. It will do!
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "open netrw"})
+require("sutorio.helpers").lmap({
+    -- -------------------------------------------------------------------------
+    -- Text-editing-related tasks
+    -- -------------------------------------------------------------------------
+    -- When you paste *over* other text, Vim replaces the buffer with the replaced text.
+    -- This is really annoying most of the time! So `<leader>p` will do what is expected (keep original text in-buffer).
+    ["ep"]  = { mode = "x", rhs = [["_dP]], desc = "paste but keep original text in buffer"},
+    ["ef"]  = { mode = "n", rhs = vim.lsp.buf.format, desc = "format current file" },
+    -- Search based on the word under the cursor. Note that this seeds the search, can modify the search once the command is ran.
+    ["es"]  = { mode = "n", rhs = [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], desc = "start search based on word under cursor" },
+    ["ey"]  = { mode = { "n", "v" }, rhs = [["+y]], desc = "yank to system clipboard" },
+    ["eY"]  = { mode = "n", rhs = [["+Y]], desc = "yank line to system clipboard" },
+    -- -------------------------------------------------------------------------
+    -- Neovim-specific/inbuilt system-related tasks
+    -- -------------------------------------------------------------------------
+    ["n/"] = { mode = "n", rhs = vim.cmd.Ex, desc = "open netrw" },
+    ["ns"] = { mode = "n", rhs = "<Cmd>so<Cr>", desc = "source current file" },
+    ["nx"] = { mode = "n", rhs = "<cmd>!chmod +x %<CR>", desc = "chmod +x the current file", opts = { silent = true }},
+})
 
--- When you paste *over* other text, Vim replaces the buffer with the replaced text.
--- This is really annoying most of the time! So `<leader>p` will do what is expected (keep original text in-buffer).
-vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "paste but keep original text in buffer"})
-
--- Using `<leader>y` instead of `y` will yank to the *system* clipboard. Woohoo!
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "yank to system clipboard"})
-vim.keymap.set("n", "<leader>Y", [["+Y]])
-
--- Do dat formatting.
-vim.keymap.set("n", "<leader>/", function()
-  vim.lsp.buf.format()
-end, { desc = "apply formatting to current file" })
 
 -- Move up and down a quickfix list.
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz", { desc = "move up quickfixlist" })
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz", { desc = "move up quickfixlist" })
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz", { desc = "move up loclist" })
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", { desc = "move down loclist" })
-
--- Search based on the word under the cursor. Note that this basically seed the search, so can modify the search once the command is ran. Neat!
-vim.keymap.set(
-  "n",
-  "<leader>s",
-  [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "start search based on word under cursor" }
-)
-
--- chmod +x the current file.
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { desc = "chmod +x the current file", silent = true })
 -- }}}
 -- =============================================================================
 
