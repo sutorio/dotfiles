@@ -10,5 +10,5 @@ return {
   {'L3MON4D3/LuaSnip'},
   {'b0o/schemastore.nvim'},
   {'rafamadriz/friendly-snippets'},
-  {'mhartington/formatter.nvim'},
+  {'stevearc/conform.nvim'},
 }

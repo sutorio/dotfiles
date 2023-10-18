@@ -32,7 +32,7 @@ require("sutorio.helpers").lmap({
     -- When you paste *over* other text, Vim replaces the buffer with the replaced text.
     -- This is really annoying most of the time! So `<leader>p` will do what is expected (keep original text in-buffer).
     ["ep"]  = { mode = "x", rhs = [["_dP]], desc = "paste but keep original text in buffer"},
-    ["ef"]  = { mode = "n", rhs = vim.lsp.buf.format, desc = "format current file" },
+    -- ["ef"]  = { mode = "n", rhs = vim.lsp.buf.format, desc = "format current file" },
     -- Search based on the word under the cursor. Note that this seeds the search, can modify the search once the command is ran.
     ["es"]  = { mode = "n", rhs = [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], desc = "start search based on word under cursor" },
     ["ey"]  = { mode = { "n", "v" }, rhs = [["+y]], desc = "yank to system clipboard" },

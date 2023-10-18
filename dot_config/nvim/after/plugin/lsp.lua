@@ -11,13 +11,26 @@ local lsp_defaults = lspconfig.util.default_config
 -- {{{ LSP server custom rules (overrides defaults)
 -- =============================================================================
 local deno_ls_custom_config = function()
-    lspconfig.denols.setup({
-        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-    })
+  lspconfig.denols.setup({
+    root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+  })
 end
 
-local json_ls_custom_config = function()
-  lspconfig.json_ls.setup({
+local emmet_ls_custom_config = function()
+  lspconfig.emmet_ls.setup({
+    -- The Emmet language server requires hints re. which extensions it
+    -- should provide completions for. I only care about HTML/HTML templating
+    filetypes = {
+      "html",
+      "heex",
+      "eex",
+      "njk",
+    },
+  })
+end
+
+local jsonls_custom_config = function()
+  lspconfig.jsonls.setup({
     settings = {
       json = {
         schemas = require("schemastore").json.schemas(),
@@ -57,33 +70,22 @@ end
 
 local tsserver_custom_config = function()
   lspconfig.tsserver.setup({
-    root_dir = lspconfig.util.root_pattern(
-      "package.json",
-      "tsconfig.json"
-    ),
+    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json"),
     single_file_support = false,
   })
 end
 -- =============================================================================
 -- {{{ Formatters
 -- =============================================================================
--- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
-require("formatter").setup({
-  -- Enable or disable logging
-  logging = true,
-  -- Set the log level
-  log_level = vim.log.levels.WARN,
-  -- All formatter configurations are opt-in
-  filetype = {
-    lua = {
-      require("formatter.filetypes.lua").stylua,
-    },
-    elixir = {
-      require("formatter.filetypes.elixir").mixformat,
-    },
-    ["*"] = {
-      require("formatter.filetypes.any").remove_trailing_whitespace,
-    },
+require("conform").setup({
+  formatters_by_ft = {
+    css = { "prettierd" },
+    lua = { "stylua" },
+    javascript = { "deno_fmt" },
+    typescript = { "deno_fmt" },
+    markdown = { "deno_fmt" },
+    json = { "deno_fmt" },
+    jsonc = { "deno_fmt" },
   },
 })
 -- }}}
@@ -208,15 +210,12 @@ end
 local InitFormatting = function(client)
   -- NOTE: I give up. The built in formatting works...sometimes. Most of the time
   -- it's an ultra-frustrating garbage fire.
-  client.server_capabilities.document_formatting = false
-  client.server_capabilities.document_range_formatting = false
+  client.server_capabilities.document_formatting = true
+  client.server_capabilities.document_range_formatting = true
 
-  -- TODO: toggle format on save maybe? I go through phases where I think it's useful, then phases where I find it annoying.
-  -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  -- pattern = "*",
-  -- command = "FormatWrite",
-  -- desc = "Apply formatting using format.nvim",
-  -- })
+  vim.keymap.set("n", "<leader>ef", function()
+    require("conform").format({ lsp_fallback = true })
+  end, { desc = "format document" })
 end
 -- }}}
 -- =============================================================================
@@ -254,7 +253,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "]d",   vim.diagnostic.goto_next,    opts)
     -- stylua: ignore end
 
-
     InitHighlighting(client, buffer)
     InitFormatting(client)
   end,
@@ -270,7 +268,8 @@ require("mason-lspconfig").setup({
   handlers = {
     default_setup,
     denols = deno_ls_custom_config,
-    json_ls = json_ls_custom_config,
+    emmet_ls = emmet_ls_custom_config,
+    jsonls = jsonls_custom_config,
     lua_ls = lua_ls_custom_config,
     tsserver = tsserver_custom_config,
   },

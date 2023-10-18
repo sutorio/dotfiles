@@ -1,5 +1,18 @@
 -- Leader key is set prior to anything else.
 vim.g.mapleader = " "
+-- Add filetypes that are not currently being recognised
+vim.filetype.add({
+    extension = {
+        -- Nunjucks templates
+        njk = "html",
+        -- .aliases and .profiles files
+        aliases = "bash",
+        profiles = "bash",
+    },
+    pattern = {
+        ["bash"] = "bash",
+    },
+})
 -- I want line numbers and relative line numbers.
 vim.opt.nu = true
 vim.opt.relativenumber = true
