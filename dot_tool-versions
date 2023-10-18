@@ -9,3 +9,5 @@ starship 1.16.0
 julia 1.9.3
 nodejs 20.7.0
 fd 8.7.0
+zola 0.17.2
+deno 1.37.2
