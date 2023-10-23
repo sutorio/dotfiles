@@ -2,6 +2,23 @@
 -- =============================================================================
 -- Key mappings and remappings that *dont* depend on a specific plugin.
 -- =============================================================================
+-- {{{ Commands to bind to leader mappings
+-- =============================================================================
+local usercmd = vim.api.nvim_create_user_command
+
+usercmd("ToggleWordWrap", "set wrap!", {})
+
+usercmd("ToggleColorColumn", function()
+  if vim.wo.colorcolumn == "" then
+    vim.wo.colorcolumn = "80"
+  else
+    vim.wo.colorcolumn = ""
+  end
+end, {})
+
+usercmd("ToggleListChars", "set list!", {})
+-- }}}
+-- =============================================================================
 -- {{{ Adjustments to existing builtin mappings
 -- =============================================================================
 -- Adjust the behaviour of `J` in normal mode: instead of moving the cursor to the join position, keep it where it is.
@@ -25,6 +42,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- =============================================================================
 -- {{{ Leader mappings
 -- =============================================================================
+-- stylua: ignore start
 require("sutorio.helpers").lmap({
     -- -------------------------------------------------------------------------
     -- Text-editing-related tasks
@@ -43,14 +61,22 @@ require("sutorio.helpers").lmap({
     ["n/"] = { mode = "n", rhs = vim.cmd.Ex, desc = "open netrw" },
     ["ns"] = { mode = "n", rhs = "<Cmd>so<Cr>", desc = "source current file" },
     ["nx"] = { mode = "n", rhs = "<cmd>!chmod +x %<CR>", desc = "chmod +x the current file", opts = { silent = true }},
+    -- -------------------------------------------------------------------------
+    -- Toggles
+    -- -------------------------------------------------------------------------
+    ["tb"] = { mode = "n", rhs = "<Cmd>ToggleColorColumn<Cr>", desc = "toggle colorcolumn", opts = { silent = true }},
+    ["tl"] = { mode = "n", rhs = "<Cmd>ToggleListChars<Cr>", desc = "toggle list chars", opts = { silent = true }},
+    ["tw"] = { mode = "n", rhs = "<Cmd>ToggleWordWrap<Cr>", desc = "toggle word wrap", opts = { silent = true }},
 })
+-- stylua: ignore end
 
 
+-- stylua: ignore start
 -- Move up and down a quickfix list.
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz", { desc = "move up quickfixlist" })
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz", { desc = "move up quickfixlist" })
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz", { desc = "move up loclist" })
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", { desc = "move down loclist" })
+-- stylua: ignore end
 -- }}}
 -- =============================================================================
-

@@ -217,12 +217,25 @@ local InitFormatting = function(client)
     require("conform").format({ lsp_fallback = true })
   end, { desc = "format document" })
 end
+
+-- }}}
+-- =============================================================================
+-- {{{ Copilot setup
+-- =============================================================================
+local SetupCopilot = function()
+    -- TODO: tweak this. In particular, I want copilot to start/stop on-demand.
+    --       The server takes a while to start, so just setting up straightaway
+    --       is gonna make NVim hang to fuck.
+    --       See: https://github.com/zbirenbaum/copilot.lua
+    require('copilot').setup()
+end
 -- }}}
 -- =============================================================================
 -- {{{ LSP: finalise setup
 -- =============================================================================
 
 InitDiagnosticsUi()
+SetupCopilot()
 
 lsp_defaults.capabilities = vim.tbl_deep_extend(
   "force",

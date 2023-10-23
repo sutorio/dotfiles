@@ -69,7 +69,7 @@ local groups = {
 -- =============================================================================
 -- stylua: ignore start
 local editor_syntax = {
-    ColorColumn          = { bg = p.background1 },
+    ColorColumn          = { bg = p.blueGray3 },
     -- Cursor         = {},
     CursorLine           = { bg = p.background1 },
     CursorLineNr         = { fg = p.text },

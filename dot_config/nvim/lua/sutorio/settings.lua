@@ -2,16 +2,16 @@
 vim.g.mapleader = " "
 -- Add filetypes that are not currently being recognised
 vim.filetype.add({
-    extension = {
-        -- Nunjucks templates
-        njk = "html",
-        -- .aliases and .profiles files
-        aliases = "bash",
-        profiles = "bash",
-    },
-    pattern = {
-        ["bash"] = "bash",
-    },
+  extension = {
+    -- Nunjucks templates
+    njk = "html",
+    -- .aliases and .profiles files
+    aliases = "bash",
+    profiles = "bash",
+  },
+  pattern = {
+    ["bash"] = "bash",
+  },
 })
 -- I want line numbers and relative line numbers.
 vim.opt.nu = true
@@ -45,7 +45,7 @@ vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 -- Show autocomplete menu on <tab>
 vim.opt.wildmenu = true
--- Yes, I absolutely do want some space next to the line numbers for signs 
+-- Yes, I absolutely do want some space next to the line numbers for signs
 -- an stuff.
 vim.opt.signcolumn = "yes"
 -- Adds character space to left of screen. leave this in regradless because I

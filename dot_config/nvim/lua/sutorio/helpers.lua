@@ -1,13 +1,26 @@
+--- Helper functions
+-- @module helpers
+
 local M = {}
 
--- @class LeaderMappings
+--- Leader mapping.
+-- Accepts a table mapping the binding to a table of the command (rhs),
+-- description, modes/s it applies to + any additional options. The table
+-- is of the form:
 --
-
--- Leader mapping helper. The mappings are of the form
+-- {
+--   ["binding"] = {
+--     rhs = "mapping (string/function)",
+--     desc = "some description (string)",
+--     mode = "mode or modes (string/list of strings)",
+--     opts = "any additional options (table, optional)"
+--  }
+-- }
 --
--- ["binding"] = { rhs = "mapping", desc = "some description", mode = "mode or modes", opts = "any additional options" }
+-- All bindings will then be set using the nvim `keymap.set` function.
 --
--- Defined as a table.
+-- @param leader_mappings
+-- @return void
 M.lmap = function(leader_mappings)
   for lhs, config in pairs(leader_mappings) do
     -- All of these map to the <Leader>, so prefix every lhs

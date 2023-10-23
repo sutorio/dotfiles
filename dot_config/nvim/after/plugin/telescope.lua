@@ -47,9 +47,11 @@ telescope.load_extension("file_browser")
 -- =============================================================================
 helpers.lmap({
     ["fb"] = { mode = "n", rhs = builtin.buffers, desc = "open buffers" },
+    ["fc"] = { mode = "n", rhs = builtin.commands, desc = "available commands" },
     ["fd"] = { mode = "n", rhs = builtin.diagnostics, desc = "diagnostics" },
     ["ff"] = { mode = "n", rhs = builtin.find_files, desc = "files in cdr" },
     ["fh"] = { mode = "n", rhs = builtin.help_tags, desc = "help tags" },
+    ["fo"] = { mode = "n", rhs = builtin.oldfiles, desc = "recent files" },
     ["fn"] = { mode = "n", rhs = function() require("noice").cmd("history") end, desc = "notification messages" },
     ["fp"] = { mode = "n", rhs = telescope.extensions.project.project, desc = "project picker" },
     ["fx"] = { mode = "n", rhs = telescope.extensions.file_browser.file_browser, desc = "file browser" },
