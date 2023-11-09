@@ -13,5 +13,6 @@
             w = { name = "LSP workspace" },
         },
         n = { name = "NVim-related" },
+        o = { name = "org-mode"},
         t = { name = "Toggle" },
     }, { prefix = "<Leader>" })

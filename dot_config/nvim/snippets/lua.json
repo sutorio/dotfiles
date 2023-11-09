@@ -1,0 +1,25 @@
+{
+  "file header": {
+    "scope": "lua",
+    "prefix": "nvim_config_file_head_section",
+    "body": [
+      "-- vim:fileencoding=utf-8:foldmethod=marker",
+      "-- =============================================================================",
+      "-- ${1: FILE OVERVIEW}",
+      "-- ============================================================================="
+    ],
+    "description": "Creates a header section matching existing NVim config style"
+  },
+  "file section": {
+    "scope": "lua",
+    "prefix": "nvim_config_file_section",
+    "body": [
+      "-- {{{ ${1: SECTION DESCRIPTION}",
+      "-- =============================================================================",
+      "${2: SECTION CONTENTS}",
+      "-- }}}",
+      "-- ============================================================================="
+    ],
+    "description": "Creates a section matching existing NVim config style"
+  }
+}

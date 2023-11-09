@@ -11,6 +11,7 @@ vim.filetype.add({
   },
   pattern = {
     ["bash"] = "bash",
+    ["justfile/i"] = "just",
   },
 })
 -- I want line numbers and relative line numbers.

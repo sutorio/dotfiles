@@ -1,5 +1,23 @@
+-- vim:fileencoding=utf-8:foldmethod=marker
+-- =============================================================================
+-- Configs relating to the `mini.nvim` family of utility plugins.
+--
+-- Although it's not at all required, I do like having a nice start screen with
+-- information about what I should be doing. `mini-starter` is used for this.
+-- It also cycles through the list of oblique strategies, printing them at the 
+-- bottom of the page.
+--
+-- Again, not at all required, but having a statusline with useful info that
+-- doesn't look like dogshit is nice. `mini-statusline` for this.
+-- =============================================================================
+-- {{{ Aliases
+-- =============================================================================
 local starter = require("mini.starter")
-
+local statusline = require("mini.statusline")
+-- }}}
+-- =============================================================================
+-- {{{ mini-starter configs
+-- =============================================================================
 local greeting = function()
   local hour = tonumber(vim.fn.strftime("%H"))
   -- [04:00, 12:00) - morning, [12:00, 20:00) - day, [20:00, 04:00) - evening
@@ -217,3 +235,10 @@ starter.setup({
     starter.gen_hook.padding(20, 0),
   },
 })
+-- }}}
+-- =============================================================================
+-- {{{ mini.statusline
+-- =============================================================================
+statusline.setup()
+-- }}}
+-- =============================================================================

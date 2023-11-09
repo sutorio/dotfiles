@@ -6,6 +6,7 @@
 -- =============================================================================
 local lspconfig = require("lspconfig")
 local lsp_defaults = lspconfig.util.default_config
+local luasnip = require("luasnip")
 -- }}}
 -- =============================================================================
 -- {{{ LSP server custom rules (overrides defaults)
@@ -98,6 +99,7 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
+    { name = "orgmode" },
     { name = "buffer" },
     { name = "path" },
   },
@@ -110,7 +112,7 @@ cmp.setup({
   }),
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
     end,
   },
 })
@@ -217,17 +219,35 @@ local InitFormatting = function(client)
     require("conform").format({ lsp_fallback = true })
   end, { desc = "format document" })
 end
+-- }}}
+-- =============================================================================
+-- {{{ Snippets setup
+local SetupLuaSnip = function()
+  luasnip.setup({
+    history = true,
+    updateevents = "TextChanged, TextChangedI",
+    enable_autosnippets = true,
+  })
+  -- For VSCode-style snippets, they need to live in a directory on the
+  -- runtime path, with a package.json manifest. So this is not, strictly
+  -- speaking, necessary (LuaSnip will locate the VSCode-style snippets by
+  -- default). But it allows other loaders to be added that point to this
+  -- directory without much fuss.
+  local snippets_fpath = vim.fn.stdpath("config") .. "/snippets"
+
+  require("luasnip.loaders.from_vscode").load({ paths = snippets_fpath })
+end
 
 -- }}}
 -- =============================================================================
 -- {{{ Copilot setup
 -- =============================================================================
 local SetupCopilot = function()
-    -- TODO: tweak this. In particular, I want copilot to start/stop on-demand.
-    --       The server takes a while to start, so just setting up straightaway
-    --       is gonna make NVim hang to fuck.
-    --       See: https://github.com/zbirenbaum/copilot.lua
-    require('copilot').setup()
+  -- TODO: tweak this. In particular, I want copilot to start/stop on-demand.
+  --       The server takes a while to start, so just setting up straightaway
+  --       is gonna make NVim hang to fuck.
+  --       See: https://github.com/zbirenbaum/copilot.lua
+  require("copilot").setup()
 end
 -- }}}
 -- =============================================================================
@@ -235,6 +255,7 @@ end
 -- =============================================================================
 
 InitDiagnosticsUi()
+SetupLuaSnip()
 SetupCopilot()
 
 lsp_defaults.capabilities = vim.tbl_deep_extend(
